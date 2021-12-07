@@ -14,13 +14,11 @@ public class PostsApiController {
 
     private final PostsService postsService;
 
-    @PreAuthorize("hasRole('ROLE_USER')")
     @PostMapping("/api/v1/posts")
     public Long save(@RequestBody PostsSaveRequestDto requestDto) {
         return postsService.save(requestDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
     @PutMapping("/api/v1/posts/{id}")
     public Long update(@PathVariable Long id, @RequestBody PostsUpdateRequestDto requestDto) {
         return postsService.update(id, requestDto);
@@ -31,7 +29,6 @@ public class PostsApiController {
         return postsService.findById(id);
     }
 
-    @PreAuthorize("hasRole('ROLE_USER')")
     @DeleteMapping("/api/v1/posts/{id}")
     public Long delete(@PathVariable Long id) {
         postsService.delete(id);
