@@ -1,5 +1,5 @@
 {{>layout/header}}
-
+<a href="/" role="button" class="btn btn-secondary">Home</a>
 <table class="table">
     <thead class="thead-light">
     <tr>
@@ -13,7 +13,7 @@
         <tbody>
         <tr>
             <th scope="row">{{id}}</th>
-            <td><a href="/{{id}}">{{title}}</a></td>
+            <td><a href="/posts/{{id}}">{{title}}</a></td>
             <td>{{author}}</td>
             <td>{{modifiedDate}}</td>
         </tr>
