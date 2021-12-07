@@ -2,7 +2,6 @@ package com.hyerim.book.springboot.config.auth;
 
 import com.hyerim.book.springboot.domain.user.Role;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -23,8 +22,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/", "/css/**", "/images/**", "/js/**", "/h2-console/**").permitAll()
-                .antMatchers("/api/v1/**").permitAll()
-//                .anyRequest().authenticated()
+                .antMatchers("/api/v1/**").hasRole(Role.USER.name())
+                .anyRequest().authenticated()
                 .and().logout()
                 .logoutSuccessUrl("/")
                 .and()
