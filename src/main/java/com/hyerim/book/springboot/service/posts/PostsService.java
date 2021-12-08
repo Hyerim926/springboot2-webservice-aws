@@ -76,9 +76,9 @@ public class PostsService {
 
     //검색기능
     @Transactional
-    public List<Posts> search(String keyword, Pageable pageable) {
+    public Page<Posts> search(String keyword, Pageable pageable) {
 
-        List<Posts> boardList = postsRepository.findByTitleContaining(keyword, pageable);
+        Page<Posts> boardList = postsRepository.findByTitleContaining(keyword, pageable);
 
         return boardList;
     }

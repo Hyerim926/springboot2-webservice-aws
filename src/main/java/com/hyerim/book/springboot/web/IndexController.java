@@ -6,6 +6,7 @@ import com.hyerim.book.springboot.domain.posts.Posts;
 import com.hyerim.book.springboot.service.posts.PostsService;
 import com.hyerim.book.springboot.web.dto.PostsResponseDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -14,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import javax.persistence.Id;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -24,12 +26,14 @@ public class IndexController {
 
     @GetMapping("/")
     public String index(Model model, @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, @LoginUser SessionUser user) {
+
         model.addAttribute("posts", postsService.getBoardList(pageable));
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("check", postsService.getListCheck(pageable));
         if (user != null) {
             model.addAttribute("userName", user.getName());
+            model.addAttribute("userImage", user.getPicture());
         }
         return "index";
     }
@@ -59,7 +63,7 @@ public class IndexController {
 
     @GetMapping("/posts/search")
     public String search(String keyword, @PageableDefault(size = 10, sort = "id", direction = Sort.Direction.DESC) Pageable pageable, Model model) {
-        List<Posts> searchList = postsService.search(keyword, pageable);
+        Page<Posts> searchList = postsService.search(keyword, pageable);
 
         model.addAttribute("searchList", searchList);
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
